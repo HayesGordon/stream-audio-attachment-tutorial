@@ -5,10 +5,28 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import 'channel_page.dart';
 
-class ChannelListPage extends StatelessWidget {
+class ChannelListPage extends StatefulWidget {
   const ChannelListPage({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<ChannelListPage> createState() => _ChannelListPageState();
+}
+
+class _ChannelListPageState extends State<ChannelListPage> {
+  late final _controller = StreamChannelListController(
+    client: StreamChat.of(context).client,
+    filter: Filter.in_('members', [StreamChat.of(context).currentUser!.id]),
+    channelStateSort: const [SortOption('last_message_at')],
+    limit: 30,
+  );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,33 +50,36 @@ class ChannelListPage extends StatelessWidget {
           )
         ],
       ),
-      body: ChannelsBloc(
-        child: ChannelListView(
-          emptyBuilder: (conext) {
-            return Center(
-              child: ElevatedButton(
-                onPressed: () async {
-                  final channel = StreamChat.of(context).client.channel(
-                    "messaging",
-                    id: "test-gordon",
-                    extraData: {
-                      "name": "Flutter Chat",
-                      "image":
-                          "https://flutter.dev/assets/images/shared/brand/flutter/logo/flutter-lockup.png",
-                      "members": [userGordon.id, userSalvatore.id]
-                    },
-                  );
-                  await channel.create();
-                },
-                child: const Text('Create channel'),
-              ),
-            );
-          },
-          filter:
-              Filter.in_('members', [StreamChat.of(context).currentUser!.id]),
-          sort: const [SortOption('last_message_at')],
-          pagination: const PaginationParams(limit: 30),
-          channelWidget: const ChannelPage(),
+      body: StreamChannelListView(
+        controller: _controller,
+        emptyBuilder: (conext) {
+          return Center(
+            child: ElevatedButton(
+              onPressed: () async {
+                final channel = StreamChat.of(context).client.channel(
+                  "messaging",
+                  id: "test-gordon",
+                  extraData: {
+                    "name": "Flutter Chat",
+                    "image":
+                        "https://flutter.dev/assets/images/shared/brand/flutter/logo/flutter-lockup.png",
+                    "members": [userGordon.id, userSalvatore.id]
+                  },
+                );
+                await channel.create();
+              },
+              child: const Text('Create channel'),
+            ),
+          );
+        },
+        onChannelTap: (channel) => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => StreamChannel(
+              channel: channel,
+              child: const ChannelPage(),
+            ),
+          ),
         ),
       ),
     );

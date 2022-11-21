@@ -43,22 +43,29 @@ class _ChannelPageState extends State<ChannelPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const ChannelHeader(),
+      appBar: const StreamChannelHeader(),
       body: Column(
         children: <Widget>[
           Expanded(
-            child: MessageListView(
+            child: StreamMessageListView(
               messageBuilder: (context, details, messages, defaultMessage) {
                 return defaultMessage.copyWith(
                   customAttachmentBuilders: {
                     'voicenote': (context, defaultMessage, attachments) {
                       final url = attachments.first.assetUrl;
+                      late final Widget widget;
                       if (url == null) {
-                        return const AudioLoadingMessage();
+                        widget = const AudioLoadingMessage();
+                      } else {
+                        widget = AudioPlayerMessage(
+                          source: AudioSource.uri(Uri.parse(url)),
+                          id: defaultMessage.id,
+                        );
                       }
-                      return AudioPlayerMessage(
-                        source: AudioSource.uri(Uri.parse(url)),
-                        id: defaultMessage.id,
+                      return SizedBox(
+                        width: 250,
+                        height: 50,
+                        child: widget,
                       );
                     }
                   },
@@ -66,7 +73,7 @@ class _ChannelPageState extends State<ChannelPage> {
               },
             ),
           ),
-          MessageInput(
+          StreamMessageInput(
             actions: [
               RecordButton(
                 recordingFinishedCallback: _recordingFinishedCallback,

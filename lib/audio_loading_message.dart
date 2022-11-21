@@ -11,6 +11,7 @@ class AudioLoadingMessage extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: const [
           SizedBox(
             height: 20,
