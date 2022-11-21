@@ -1,16 +1,10 @@
-# audio_attachment_tutorial
+# Stream Chat Flutter Audio Attachment
 
-A new Flutter project.
+This repository demonstrates how to send audio attachments with [Stream Chat Flutter](https://getstream.io/chat/sdk/flutter/).
+
+See the [written tutorial](https://getstream.io/blog/instantly-send-audio-messages-with-stream-chat-and-flutter/) for instructions.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+If you would like to run this repository yourself, replace the `streamKey` in `config.dart` with your Stream Chat application key.
+This demo uses a project with Stream Chat authentication turned off.
