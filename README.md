@@ -1,6 +1,7 @@
 # Stream Chat Flutter Audio Attachments Sample
 
-![b44b55eb-20fd-4d03-a805-29c5662ca07d_medium](https://user-images.githubusercontent.com/13705472/203081909-d2df4c56-960b-4446-8fb8-31ec2e49bd7a.jpg)
+![Audio Messages Twitter 2400x1350px](https://user-images.githubusercontent.com/13705472/203082370-63fdc7cf-df4a-4eca-b97b-d591e0b28c96.jpg)
+
 
 This repository demonstrates how to send audio attachments with [Stream Chat Flutter](https://getstream.io/chat/sdk/flutter/).
 
